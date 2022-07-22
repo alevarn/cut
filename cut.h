@@ -25,7 +25,7 @@ static CutUnitTest *cut_current_unit_test = NULL;
 int cut_run_unit_tests(CutUnitTest tests[], int length);
 
 // Sets the status of the currently running unit test to failing. 
-void cut_set_unit_test_failed();
+void cut_set_unit_test_failing();
 
 // Creates a new unit test.
 #define CUT_UNIT_TEST(fun) \
@@ -41,7 +41,7 @@ void cut_set_unit_test_failed();
     {                                                               \
         if (!(cond))                                                \
         {                                                           \
-            cut_set_unit_test_failed();                             \
+            cut_set_unit_test_failing();                             \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, err_msg); \
         }                                                           \
     } while (0)
@@ -80,7 +80,7 @@ void cut_set_unit_test_failed();
         catch (...)                                                                               \
         {                                                                                         \
         }                                                                                         \
-        cut_set_unit_test_failed();                                                               \
+        cut_set_unit_test_failing();                                                               \
         printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_THROWS(" #code "," #ex ") FAILED"); \
     } while (0)
 
@@ -94,7 +94,7 @@ void cut_set_unit_test_failed();
         }                                                                                         \
         catch (...)                                                                               \
         {                                                                                         \
-            cut_set_unit_test_failed();                                                           \
+            cut_set_unit_test_failing();                                                           \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_NOT_THROWS(" #code ") FAILED"); \
         }                                                                                         \
     } while (0)
@@ -146,7 +146,7 @@ int cut_run_unit_tests(CutUnitTest tests[], int length)
     return passed != length;
 }
 
-void cut_set_unit_test_failed()
+void cut_set_unit_test_failing()
 {
     if (cut_current_unit_test->status == PASS)
     {
