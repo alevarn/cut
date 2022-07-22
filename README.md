@@ -4,7 +4,9 @@ A basic single header unit testing framework for C/C++.
 
 Example usage:
 
-````
+```
+// file: my_test.cpp
+
 #include "cut.h"
 
 void test1()
@@ -33,7 +35,7 @@ int main()
 }
 ```
 
-Resulting prints if the code above is executed: 
+Resulting prints if the above code is executed: 
 
 ```
 Running 2 test(s)
@@ -45,7 +47,7 @@ RUN
 - test2
 FAIL
 - test2
-  - my_test.cpp:15: ASSERT_TRUE(4 < 3) FAILED
+  - my_test.cpp:17: ASSERT_TRUE(4 < 3) FAILED
 SUMMARY
 - Executed 2 test(s)
 - Passed 1 test(s)
