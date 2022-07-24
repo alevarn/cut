@@ -1,3 +1,5 @@
+// A basic single header unit testing framework for C/C++.
+
 #ifndef CUT_H
 #define CUT_H
 
