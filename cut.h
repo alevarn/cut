@@ -20,43 +20,45 @@ typedef struct CutUnitTest
     CutUnitTestStatus status;
 } CutUnitTest;
 
-// The currently running unit test. 
+// The currently running unit test.
 static CutUnitTest *cut_current_unit_test = NULL;
 
-// Runs all unit tests in the array and prints the result to stdout. 
+// Runs all unit tests in the array and prints the result to stdout.
 int cut_run_unit_tests(CutUnitTest tests[], int length);
 
-// Sets the status of the currently running unit test to failing. 
+// Sets the status of the currently running unit test to failing.
 void cut_set_unit_test_failing();
 
 // Creates a new unit test.
 #define CUT_UNIT_TEST(fun) \
-    { #fun, fun, PASS }
+    {                      \
+#fun, fun, PASS    \
+    }
 
-// Runs all unit tests in the array. 
+// Runs all unit tests in the array.
 #define CUT_RUN_UNIT_TESTS(tests) \
     cut_run_unit_tests(tests, sizeof(tests) / sizeof(tests[0]))
 
-// Ensures that the condition holds true, otherwise prints an error message to stdout. 
+// Ensures that the condition holds true, otherwise prints an error message to stdout.
 #define ASSERT(cond, err_msg)                                       \
     do                                                              \
     {                                                               \
         if (!(cond))                                                \
         {                                                           \
-            cut_set_unit_test_failing();                             \
+            cut_set_unit_test_failing();                            \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, err_msg); \
         }                                                           \
     } while (0)
 
-// Ensures that a condition evaluates to true. 
+// Ensures that a condition evaluates to true.
 #define ASSERT_TRUE(cond) \
     ASSERT(cond, "ASSERT_TRUE(" #cond ") FAILED")
 
-// Ensures that a condition evaluates to false. 
+// Ensures that a condition evaluates to false.
 #define ASSERT_FALSE(cond) \
     ASSERT(!(cond), "ASSERT_FALSE(" #cond ") FAILED")
 
-// Ensures that two values are equal. 
+// Ensures that two values are equal.
 #define ASSERT_EQ(expected, actual) \
     ASSERT(expected == actual, "ASSERT_EQ(" #expected "," #actual ") FAILED")
 
@@ -64,10 +66,14 @@ void cut_set_unit_test_failing();
 #define ASSERT_EQ_ERR(expected, actual, err) \
     ASSERT(expected - err <= actual && actual <= expected + err, "ASSERT_EQ_ERR(" #expected "," #actual "," #err ") FAILED")
 
+// Ensures failure.
+#define ASSERT_FAIL() \
+    ASSERT(0, "ASSERT_FAIL() FAILED")
+
 // Asserts for handling exceptions, which is only relevant if we are compiling C++ code.
 #ifdef __cplusplus
 
-// Ensures that a piece of code throws an exception of a certain type. 
+// Ensures that a piece of code throws an exception of a certain type.
 #define ASSERT_THROWS(code, ex)                                                                   \
     do                                                                                            \
     {                                                                                             \
@@ -82,7 +88,7 @@ void cut_set_unit_test_failing();
         catch (...)                                                                               \
         {                                                                                         \
         }                                                                                         \
-        cut_set_unit_test_failing();                                                               \
+        cut_set_unit_test_failing();                                                              \
         printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_THROWS(" #code "," #ex ") FAILED"); \
     } while (0)
 
@@ -96,7 +102,7 @@ void cut_set_unit_test_failing();
         }                                                                                         \
         catch (...)                                                                               \
         {                                                                                         \
-            cut_set_unit_test_failing();                                                           \
+            cut_set_unit_test_failing();                                                          \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_NOT_THROWS(" #code ") FAILED"); \
         }                                                                                         \
     } while (0)
