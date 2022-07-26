@@ -68,8 +68,12 @@ void cut_set_unit_test_failing();
 #define ASSERT_FAIL() \
     ASSERT(0, "ASSERT_FAIL() FAILED")
 
-// Asserts for handling exceptions, which is only relevant if we are compiling C++ code.
+// Asserts for handling exceptions and type casting which is only relevant if we are compiling C++ code.
 #ifdef __cplusplus
+
+// Ensures that a variable can be casted to specific type. 
+#define ASSERT_CAST(type, var) \
+    (dynamic_cast<type>(var) ? static_cast<type>(var) : ASSERT(0, "ASSERT_CAST("#type, "," #var") FAILED"))
 
 // Ensures that a piece of code throws an exception of a certain type.
 #define ASSERT_THROWS(code, ex)                                                                   \
