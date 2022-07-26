@@ -31,7 +31,9 @@ void cut_set_unit_test_failing();
 
 // Creates a new unit test.
 #define CUT_UNIT_TEST(fun) \
-    { #fun, fun, PASS }
+    {                      \
+#fun, fun, PASS    \
+    }
 
 // Runs all unit tests in the array.
 #define CUT_RUN_UNIT_TESTS(tests) \
@@ -71,9 +73,10 @@ void cut_set_unit_test_failing();
 // Asserts for handling exceptions and type casting which is only relevant if we are compiling C++ code.
 #ifdef __cplusplus
 
-// Ensures that a variable can be casted to specific type. 
+// Ensures that a variable can be casted to specific type.
 #define ASSERT_CAST(type, var) \
-    ASSERT(dynamic_cast<type>(var), "ASSERT_CAST("#type "," #var") FAILED")
+    static_cast<type>(var);    \
+    ASSERT(dynamic_cast<type>(var), "ASSERT_CAST(" #type "," #var ") FAILED")
 
 // Ensures that a piece of code throws an exception of a certain type.
 #define ASSERT_THROWS(code, ex)                                                                   \
