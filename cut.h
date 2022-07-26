@@ -73,7 +73,7 @@ void cut_set_unit_test_failing();
 
 // Ensures that a variable can be casted to specific type. 
 #define ASSERT_CAST(type, var) \
-    (dynamic_cast<type>(var) ? static_cast<type>(var) : ASSERT(0, "ASSERT_CAST("#type, "," #var") FAILED"))
+    (dynamic_cast<type>(var) ? static_cast<type>(var) : ASSERT(0, "ASSERT_CAST("#type "," #var") FAILED"))
 
 // Ensures that a piece of code throws an exception of a certain type.
 #define ASSERT_THROWS(code, ex)                                                                   \
