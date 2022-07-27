@@ -31,9 +31,7 @@ void cut_set_unit_test_failing();
 
 // Creates a new unit test.
 #define CUT_UNIT_TEST(fun) \
-    {                      \
-#fun, fun, PASS    \
-    }
+    { #fun, fun, PASS }
 
 // Runs all unit tests in the array.
 #define CUT_RUN_UNIT_TESTS(tests) \
