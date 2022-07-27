@@ -45,6 +45,7 @@ void cut_set_unit_test_failing();
         {                                                           \
             cut_set_unit_test_failing();                            \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, err_msg); \
+            fflush(stdout);                                         \
         }                                                           \
     } while (0)
 
@@ -93,6 +94,7 @@ void cut_set_unit_test_failing();
         }                                                                                         \
         cut_set_unit_test_failing();                                                              \
         printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_THROWS(" #code "," #ex ") FAILED"); \
+        fflush(stdout);                                                                           \
     } while (0)
 
 // Ensures that a piece of code does not throw any exception at all.
@@ -107,6 +109,7 @@ void cut_set_unit_test_failing();
         {                                                                                         \
             cut_set_unit_test_failing();                                                          \
             printf("  - %s:%d: %s\n", __FILE__, __LINE__, "ASSERT_NOT_THROWS(" #code ") FAILED"); \
+            fflush(stdout);                                                                       \
         }                                                                                         \
     } while (0)
 
@@ -123,12 +126,14 @@ int cut_run_unit_tests(CutUnitTest tests[], int length)
         cut_current_unit_test = &tests[i];
 
         printf("RUN\n- %s\n", cut_current_unit_test->name);
+        fflush(stdout);
 
         cut_current_unit_test->fun();
 
         if (cut_current_unit_test->status == PASS)
         {
             printf("PASS\n- %s\n", cut_current_unit_test->name);
+            fflush(stdout);
             passed++;
         }
     }
@@ -163,6 +168,7 @@ void cut_set_unit_test_failing()
     {
         cut_current_unit_test->status = FAIL;
         printf("FAIL\n- %s\n", cut_current_unit_test->name);
+        fflush(stdout);
     }
 }
 
